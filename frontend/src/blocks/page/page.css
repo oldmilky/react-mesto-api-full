@@ -1,4 +1,4 @@
 .page {
-  background-color: black;
-  min-height: 100vh;
+    max-width: 880px;
+    margin: 0 auto;
 }

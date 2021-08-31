@@ -1,47 +1,34 @@
-import React from "react";
-import PopupWithForm from "./PopupWithForm";
+import PopupWithForm from './PopupWithForm';
+import React from 'react';
 
 function AddPlacePopup({isOpen, onClose, onAddPlace}) {
+  const nameInput = React.useRef();
+  const linkInput = React.useRef();
 
-    const [name, setName] = React.useState('')
-    const [link, setLink] = React.useState('')
+  function handleSubmit(e) {
+    e.preventDefault();
 
-    function handleSubmit(evt) {
-        evt.preventDefault()
-        onAddPlace({
-            name: name,
-            link: link,
-        })
-    }
+    // Передаём значения управляемых компонентов во внешний обработчик
+    onAddPlace({
+      name: nameInput.current.value,
+      link: linkInput.current.value
+    });
+  }
 
-    function handleChangeName(evt) {
-        setName(evt.target.value)
-    }
-
-    function handleChangeLink(evt) {
-        setLink(evt.target.value)
-    }
-
-    return (
-        <PopupWithForm
-            title="Новое место"
-            name="photo"
-            buttonText="Сохранить"
-            isOpen={isOpen}
-            onClose={onClose}
-            handleSubmit={handleSubmit}>
-            <input type="text" className="popup__field " id="form-title-input" name="name"
-                   value={name || ''}
-                   placeholder="Название"
-                   required
-                   minLength="2" maxLength="30" onChange={handleChangeName}/>
-            <span className="form-title-input-error"> </span>
-            <input type="url" className="popup__field popup__field_link" id="form-link-input" name="link"
-                   value={link || ''}
-                   placeholder="Ссылка на картинку" required onChange={handleChangeLink}/>
-            <span className="form-link-input-error"> </span>
-        </PopupWithForm>
-    )
+  return (
+    <PopupWithForm 
+      name="add"
+      title="Новое место"
+      isOpen={isOpen}
+      onClose={onClose}
+      submitButtonValue={'Создать'}
+      handleSubmit={handleSubmit}>
+        <input ref={nameInput}minLength="1" maxLength="30" type="text" placeholder="Название" className="popup__input popup__input_name_title-card" name="title-card" id="title-input" required />
+        <span className='popup__input-error' id='title-input-error'>Вы пропустили это поле.</span>
+        <input ref={linkInput}type="url" placeholder="Ссылка на картинку" className="popup__input popup__input_name_link-card" name="link-card" id="link-input" required />
+        <span className='popup__input-error' id='link-input-error'>Вы пропустили это поле.</span>
+    </PopupWithForm>
+  )
 }
 
 export default AddPlacePopup;

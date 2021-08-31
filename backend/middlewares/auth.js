@@ -1,25 +1,24 @@
 const jwt = require('jsonwebtoken');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const AuthError = require('../errors/auth_error');
 
-// eslint-disable-next-line consistent-return
-module.exports = (req, res, next) => {
-  const { authorization } = req.headers;
+const JWT_SECRET = 'secret';
 
-  if (!authorization || !authorization.startsWith('Bearer ')) {
-    return res.status(401)
-      .send({ message: 'Необходима авторизация' });
-  }
-
-  const token = authorization.replace('Bearer ', '');
+function auth(req, res, next) {
+  const token = req.cookies.jwt;
+  // console.log(req.cookies)
+  // console.log(token); // {token: undefined}
   let payload;
 
   try {
-    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
+    payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
-    return res.status(401).send({ message: 'Необходима авторизация' });
+    throw new AuthError('Авторизация не прошла.');
   }
+
   req.user = payload;
 
   next();
-};
+}
+
+module.exports = auth;

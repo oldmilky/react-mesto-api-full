@@ -1,14 +1,13 @@
 .profile__info {
-  margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30px;
 }
-@media screen and (max-width:756px)  {
-  .profile__info {
-    margin-right: 0;
-  }
+@media screen and (max-width: 576px) {
+    .profile__info {
+        align-items: center;
+        margin-left: 0;
+        margin-top: 22px;
+    }
 }
-@media screen and (max-width:560px)  {
-  .profile__info {
-    margin-right: 0;
-  }
-}
-
