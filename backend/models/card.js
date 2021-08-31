@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 
 const cardSchema = new mongoose.Schema({
-
   name: {
     type: String,
     required: true,
@@ -13,9 +11,10 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (link) => {
-        validator.isURL(link, { protocols: ['http', 'https'], require_protocol: true });
+      validator(v) {
+        return /^(http:\/\/|https:\/\/w*\w)/.test(v);
       },
+      message: 'Ссылка не в корректном формате',
     },
   },
   owner: {
@@ -32,7 +31,6 @@ const cardSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-
 });
 
 module.exports = mongoose.model('card', cardSchema);
