@@ -26,11 +26,10 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 
-// cors({credentials: true,  origin: true})
 const corsOptions = {
   origin: [
     'https://oldmilky.nomoredomains.club/',
-    'http://oldmilky.nomoredomains.club/sign-up',
+    'http://oldmilky.nomoredomains.club/',
     'http://62.84.115.155',
     'http://localhost:3000',
   ],
