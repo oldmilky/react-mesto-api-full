@@ -49,7 +49,7 @@ class Api {
     })
     .then(response => this._checkRequestResult(response));
   }
-  
+
   // Получить данные пользователя
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {headers: this._headers})
@@ -84,9 +84,9 @@ class Api {
 
   _checkRequestResult(response) {
     if (response.ok) {
-      return response.json(); 
+      return response.json();
     }
-    return Promise.reject(`Возникла ошибка: ${response.status}`); 
+    return Promise.reject(`Возникла ошибка: ${response.status}`);
   }
 
   errorHandler(error) {
@@ -96,7 +96,7 @@ class Api {
 
 // Работа с API
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
+  adress: 'http://backend.oldmilky.nomoredomains.club',
   headers: {
     authorization: '2373054b-c310-4707-af21-19b2a17fc69f',
     'Content-Type': 'application/json'

@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://oldmilky.nomoredomains.club/api';
+export const BASE_URL = 'http://backend.oldmilky.nomoredomains.club';
 
 const checkResponse = (res) => {
   if (res.ok) {
