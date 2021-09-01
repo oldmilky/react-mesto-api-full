@@ -31,14 +31,14 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    select: false,
+    select: false, // не возвращается хеш пароля из бд
   },
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: true, // чтобы юзер с одним имейлом не мог повторно зарегаться
     validate: {
-      validator(email) {
+      validator(email) { // чек формат почты
         return validator.isEmail(email);
       },
     },
@@ -52,7 +52,7 @@ function toJSON() {
 
 userSchema.methods.toJSON = toJSON;
 
-userSchema.statics.findUserByCredentials = function Credentials(email, password) {
+userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {

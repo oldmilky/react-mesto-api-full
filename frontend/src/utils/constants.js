@@ -1,119 +1,59 @@
-// Переменные редактирования профиля
-const popupEditWrap = document.querySelector('.popup_type_edit');
-const popupButton = document.querySelector('.profile__edit-button');
-const popupButtonClose = document.querySelector('.popup__button-close');
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__information');
-const popupForm = document.querySelector('.popup__form');
-const popupName = document.querySelector('.popup__input_name_name');
-const popupJob = document.querySelector('.popup__input_name_profession');
-const popupEditSaveButton = popupEditWrap.querySelector('.popup__button-save');
-const popupEditSelector = '.popup_type_edit';
-const popupEditCloseButtonSelector = '.popup__button-close';
-const profileSelectors = {
-    profileNameSelector: '.profile__name', 
-    profileProfessionSelector: '.profile__information',
-    profileAvatarSelector: '.popup_type_avatar',
-    profileUserAvatarSelector: '.profile__avatar'
-  }
-const userId = '2418718154fcc07d77175ad9'
-const popupEditOpenButton = document.querySelector('.profile__edit-button');
-const nameInput = popupEditWrap.querySelector('.popup__input_name_name');
-const professionInput = popupEditWrap.querySelector('.popup__input_name_profession');
+export const profilePopUp = document.querySelector(".pop-up_edit");
+export const profPopUpSelector = ".pop-up_edit";
+export const popUpOpenButton = document.querySelector(".profile__edit-button");
+export const popUpOpenButtonSelector = ".profile__edit-button";
+export const profilePopUpCloseButton = document.querySelector(".pop-up__close-button");
+export const popUpClsBtnSelector = ".pop-up__close-button";
+export const popUpDefaultName = document.querySelector(".profile__name");
+export const popUpDefaultProf = document.querySelector(".profile__prof");
+export const profilePopUpForm = document.querySelector(".pop-up__form");
+export const popUpUserName = document.querySelector(".pop-up__input_name_name");
+export const popUpUserProf = document.querySelector(".pop-up__input_name_prof");
+export const popUpUserAvatar = document.querySelector(".pop-up__input-avatar");
+// переменные второй модалки - добавления
+export const popUpAdd = document.querySelector(".pop-up_add");
+export const popUpAddSelector = ".pop-up_add";
+export const popUpAddBtn = document.querySelector(".profile__add-button");
+export const popUpAddBtnSelector = ".profile__add-button";
+export const popUpAddClsBtn = popUpAdd.querySelector(".pop-up__close-button");
+// declaring var's
+export const list = document.querySelector(".grid");
+export const formAdd = popUpAdd.querySelector(".pop-up__add-form");
+export const popUpImageTitleInput = popUpAdd.querySelector(".pop-up__input_name_title");
+export const popUpImageLinkInput = popUpAdd.querySelector(".pop-up__input_name_link");
+export const gridTemplate = document.querySelector(".grid-template").content.querySelector(".grid__wrap");
+export const cardSelector = ".grid__wrap";
+export const fullPopUp = document.querySelector(".pop-up_full");
+export const fullPopUpSelector = ".pop-up_full";
+export const fullPopUpImage = fullPopUp.querySelector(".pop-up__full-image");
+export const fullPopUpImageSelector = ".pop-up__full-image";
+export const fullPopUpImageTitle = fullPopUp.querySelector(".pop-up__title-full-image");
+export const fullPopUpTitleSelector = ".pop-up__title-full-image";
+export const fullPopUpClose = fullPopUp.querySelector(".pop-up__close-button");
+export const submitButtonAddPopUp = popUpAdd.querySelector('.pop-up__submit-button');
+export const profileSelectors = {
+    profNameSelector: '.profile__name',
+    profProfSelector: '.profile__prof',
+    avatarSelector: ".profile__icon"
 
-// Переменные редактирования аватара
-const avatarImage = document.querySelector('.profile__avatar');
-const popupAvatar = document.querySelector('.popup_type_avatar');
-const popupAvatarButton = document.querySelector('.profile__avatar-wrapp');
-const popupAvatarForm = popupAvatar.querySelector('.popup__form');
-const popupAvatarInput = popupAvatar.querySelector('.popup__input_name_link-avatar');
-const popupAvatarSubmitButton = popupAvatar.querySelector('.popup__button-save');
-const popupAvatarCloseButton = '.popup__button-close';
+}
+export const profName = document.querySelector(profileSelectors.profNameSelector);
+export const profProf = document.querySelector(profileSelectors.profProfSelector);
+export const profAvatar = document.querySelector(profileSelectors.avatarSelector);
 
-// Переменные добавляния карточки
-const popupAdd = document.querySelector('.popup_type_add');
-const popupAddButton = document.querySelector('.profile__add-button');
-const popupAddButtonClose = popupAdd.querySelector('.popup__button-close');
-const popupAddForm = popupAdd.querySelector('.popup__form');
-const popupAddSaveButton = popupAdd.querySelector('.popup__button-save');
-const popupAddOpenButton = document.querySelector('.profile__add-button');
-const popupAddSelector = '.popup_type_add';
-const popupAddCloseButtonSelector = '.popup__button-close';
-const gridCardTemplateId = '#grid-template';
 
-// Попап подтверждения
-const popupConfirmSelector = '.popup_type_confirm';
-const popupDeleteIcon = document.querySelector('.grid-item__delete-icon');
+export const commonPopUp = document.querySelector(".pop-up")
+export const escKeyCode = 27;
+//все для редактирвоания аватара
+export const avatarIcon = document.querySelector(".profile__icon")
+export const avatarButton = document.querySelector(".profile__icon-container")
+export const avatarEditPopup = ".pop-up_avatar";
+export const avatarPopupForm = document.querySelector(".pop-up_avatar").querySelector(".pop-up__avatar-form")
+export const avatarPopupCloseBtn = ".pop-up__close-button";
+export const avatarSubmitButton = document.querySelector(".pop-up_avatar").querySelector(".pop-up__submit-button")
+export const avatarInput = ".pop-up__input-avatar"
+export const gridCardTemplateId = '#grid__template';
+export const popupConfirm = ".pop-up_confirm"
+export const popupAddCloseButtonSelector = '.pop-up__close-button';
 
-// Попап картинки при нажатии
-const popupFullImage = document.querySelector('.popup_type_image');
-const popupImageSelector = '.popup_type_image';
-const popupImageCloseButtonSelector = '.popup__button-close';
-const imageSelector = '.popup__image';
-const popupImageTitleSelector = '.popup__title-image';
-const popupFullImageImage = popupFullImage.querySelector('.popup__image');
-const popupFullImageTitle = popupFullImage.querySelector('.popup__title-image');
-const popupFullImageClose = popupFullImage.querySelector('.popup__button-close');
-
-// Переменные картинки
-const titleCardInput = popupAdd.querySelector('.popup__input_name_title-card');
-const linkCardInput = popupAdd.querySelector('.popup__input_name_link-card');
-
-const photoCard = document.querySelector('.grid-places');
-
-const openedPopup = document.querySelector('.popup_opened');
-
-const escKeyCode = 27;
-
-const inputErrorSelector = '.popup__input-error';
-
-export {
-    popupEditWrap,
-    popupButton,
-    popupButtonClose,
-    profileName,
-    profileJob,
-    popupForm,
-    popupName,
-    popupJob,
-    popupEditSaveButton,
-    popupAdd,
-    popupAddButton,
-    popupAddButtonClose,
-    popupAddForm,
-    popupAddSaveButton,
-    popupFullImage,
-    popupFullImageImage,
-    popupFullImageTitle,
-    popupFullImageClose,
-    titleCardInput,
-    linkCardInput,
-    photoCard,
-    openedPopup,
-    popupImageSelector,
-    popupImageCloseButtonSelector,
-    imageSelector,
-    popupImageTitleSelector,
-    escKeyCode,
-    profileSelectors,
-    popupEditOpenButton,
-    nameInput,
-    professionInput,
-    popupEditSelector,
-    popupEditCloseButtonSelector,
-    popupAddOpenButton,
-    popupAddSelector,
-    popupAddCloseButtonSelector,
-    inputErrorSelector,
-    avatarImage,
-    popupAvatar,
-    popupAvatarButton,
-    popupAvatarForm,
-    popupAvatarInput,
-    popupAvatarSubmitButton,
-    popupAvatarCloseButton,
-    popupConfirmSelector,
-    popupDeleteIcon,
-    userId,
-    gridCardTemplateId
-};
+export const popupConfirmSelector = document.querySelector(".pop-up_confirm")
