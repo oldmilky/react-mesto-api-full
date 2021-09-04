@@ -9,15 +9,14 @@ const NotFoundError = require('../errors/not_found_error'); // 404
 
 const { NODE_ENV } = process.env;
 
-const { JWT_SECRET = 'secret' } = process.env; // подпись
+const { JWT_SECRET = 'secret' } = process.env;
 
 const getUsers = (req, res, next) => User.find({})
   .then((users) => res.status(200).send(users))
   .catch(next);
 
 const getUser = (req, res, next) => User.findById(req.params._id)
-  .orFail(new NotFoundError('Юзер по заданному ID отсутствует в БД.')) // смотрела туториал Вашего коллеги на ютубе касательно orFail(),но,
-  // видимо, не до конца уловила суть -  Ваше объяснение внесло ясность. Спасибо!
+  .orFail(new NotFoundError('Юзер по заданному ID отсутствует в БД.'))
   .then((user) => res.status(200).send(user))
   .catch((err) => {
     if (err.name === 'CastError') {
@@ -52,7 +51,6 @@ const createUser = (req, res, next) => {
 
 const updateUser = (req, res, next) => {
   const { name, about } = req.body;
-  // нашли значение у пользователя по id, обновили и отправили обратно
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .then((user) => {
       if (!user) {
@@ -71,9 +69,7 @@ const updateUser = (req, res, next) => {
 
 const updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  // нашли значение у пользователя по id, обновили
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
-  // вернули
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Юзер по заданному ID отсутствует в БД.');
@@ -95,16 +91,14 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(
-        // передаем в пейлоуд айди юзера и подпись
         { _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret', { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
         httpOnly: true,
-        sameSite: 'None',
-        secure: true,
-      }).end(res.send({ message: 'Записано.' }));
-      // console.log(res.cookie);
-      // .send({ token });
+        sameSite: true,
+        // secure: true,
+      }).send({ message: 'Записано.' });
+      // .end(res.send({ message: 'Записано.' }));
     })
     .catch(() => next(new AuthError('Неверный логин либо пароль')));
 };

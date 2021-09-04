@@ -17,15 +17,12 @@ import InfoToolTip from './InfoToolTip';
 import regIsFine from '../images/yep.svg';
 import regIsFailed from '../images/nope.png';
 
-//не уверена, что верно поняла замечание об автологине - я перезагружаю главную страницу и остаюсь в учетке
-
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});/*пустой объект (null) для правильного объявления*/
-  /*добавили стейт контекста*/
+  const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [email, setEmail] = React.useState('');
@@ -33,7 +30,7 @@ function App() {
   const [message, setMessage] = React.useState({});
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const escapeHtml = require('escape-html')
-  
+
 
   React.useEffect(() => {
     api.getUserInfo().then(data => setCurrentUser(data))
@@ -41,7 +38,6 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    //чекаем токен
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       Auth.getContent(jwt)
@@ -54,7 +50,6 @@ function App() {
     }
   }, [history]);
 
-  /*обработчики кликов*/
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
@@ -71,7 +66,7 @@ function App() {
   function handleInfoTooltipPopupOpen() {
     setIsInfoTooltipPopupOpen(true);
   }
-  //обработчик для модалки с результатом регистрации
+
   function handleInfoTooltipContent({iconPath, text}) {
     setMessage({ iconPath: iconPath, text: text })
   }
@@ -82,7 +77,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsInfoTooltipPopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    
+
   }
 
   function handleUpdateAvatar({avatar}) {
@@ -115,12 +110,9 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   function handleCardLike(card) {
-    // Проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(like => like === currentUser._id);
-    // Отправляем запрос в API и получаем обновлённые данные карточки
     const changeLike = isLiked ? api.unlikeCard(card._id) : api.likeCard(card._id)
     changeLike.then((newCard) => {
-      // Обновляем стейт на основе предшествующего колбэка
       setCards((newCards) => newCards.map((c) => c._id === card._id ? newCard : c));
     })
     .catch(error => api.errorHandler(error));
@@ -133,8 +125,7 @@ function App() {
     })
     .catch(error => api.errorHandler(error));
   }
- 
-  /*(функц в апишке)*/
+
   function handleAddPlaceSubmit({name, link}) {
     api.plusCard(name, link).then((card) => {
       setCards([card, ...cards]);
@@ -143,15 +134,12 @@ function App() {
     .catch(error => api.errorHandler(error));
   }
 
-    // функц рега
   function registration(email, password) {
     Auth.register(escapeHtml(email), password)
     .then(() => {
         handleInfoTooltipContent({iconPath: regIsFine, text: 'Вы успешно зарегистрировались!'})
         handleInfoTooltipPopupOpen();
-        /// редирект на стр входа для повтоного ввода
         history.push("/signin");
-        // свайпнули модалку через 1 сек
         setTimeout(closeAllPopups, 1000);
     }).catch((err)=> {
       handleInfoTooltipContent({iconPath: regIsFailed, text: 'Что-то пошло не так! Попробуйте ещё раз.'})
@@ -160,7 +148,7 @@ function App() {
       console.log(err)
     })
   }
-  // Авторизация 
+  // Авторизация
   function authorization(email, password) {
     Auth.authorize(escapeHtml(email), password )
     .then((data) => {
@@ -174,19 +162,17 @@ function App() {
         .then(()=> {
           handleInfoTooltipContent({iconPath: regIsFine, text: 'Вы успешно авторизовались!'})
         handleInfoTooltipPopupOpen();
-         // редирект на главную
          history.push("/");
-         //свайпнули модалку после редиректа через 1сек
          setTimeout(closeAllPopups, 1000);
         })
-        
+
     }).catch((err) => {
       handleInfoTooltipContent({iconPath: regIsFailed, text: 'Что то пошло не так!'})
       handleInfoTooltipPopupOpen();
       console.log(err)
     })
   }
-  // log out
+
   function handleSignOut() {
     setLoggedIn(false);
     localStorage.removeItem('jwt');
@@ -201,21 +187,21 @@ function App() {
         <Header loggedIn={loggedIn} email={email} handleSignOut={handleSignOut}/>
         <Switch>
         <ProtectedRoute exact path="/" loggedIn={loggedIn} component={Main}
-          onEditProfile={handleEditProfileClick} 
-          onAddPlace={handleAddPlaceClick} 
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick} 
+          onCardClick={handleCardClick}
           cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
-          /> 
+          />
           <Route path="/signin">
-           <Login 
+           <Login
            authorization={authorization}
             />
             </Route>
             <Route path="/signup">
-            <Register 
+            <Register
             registration={registration}
             />
           </Route>
@@ -225,35 +211,34 @@ function App() {
         </Switch>
         <Footer />
       </div>
-          {/*для читаемости отформатировано в столбик*/}
-          
-        <EditProfilePopup 
-          isOpen={isEditProfilePopupOpen} 
-          onClose={closeAllPopups} 
+
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           buttonText="Сохранить"
-          /> 
-      
+          />
+
         <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
         onAddPlace={handleAddPlaceSubmit}
         buttonText="Создать"
       />
-       
-          <EditAvatarPopup 
-            isOpen={isEditAvatarPopupOpen} 
+
+          <EditAvatarPopup
+            isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}  
+            onUpdateAvatar={handleUpdateAvatar}
             buttonText="Сохранить"
-          /> 
-        
-      <ImagePopup 
-        card={selectedCard} 
+          />
+
+      <ImagePopup
+        card={selectedCard}
         onClose={closeAllPopups} />
         <InfoToolTip
-         isOpen={isInfoTooltipPopupOpen} 
-         onClose={closeAllPopups} 
+         isOpen={isInfoTooltipPopupOpen}
+         onClose={closeAllPopups}
          message={message}
         />
         </div>

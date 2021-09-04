@@ -1,12 +1,11 @@
-  
+
 import React from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 function Register({registration}) {
   const [valueEmail, setValueEmail] = React.useState('');
   const [valuePassword, setValuePassword] = React.useState('');
 
-  //обработчики для инпутов регистрации
   function handleChangeEmail(e) {
     setValueEmail(e.target.value);
   }
@@ -20,7 +19,7 @@ function Register({registration}) {
     const email = valueEmail;
     const password = valuePassword;
     registration(email, password)
-  } 
+  }
 
   return (
     <section className="initial-page_register">

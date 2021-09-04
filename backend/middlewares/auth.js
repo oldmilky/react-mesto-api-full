@@ -6,8 +6,6 @@ const JWT_SECRET = 'secret';
 
 function auth(req, res, next) {
   const token = req.cookies.jwt;
-  // console.log(req.cookies)
-  // console.log(token); // {token: undefined}
   let payload;
 
   try {

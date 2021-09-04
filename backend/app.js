@@ -28,15 +28,14 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 const corsOptions = {
   origin: [
-    'https://oldmilky.nomoredomains.club/',
-    'http://oldmilky.nomoredomains.club/',
+    'https://oldmilky.nomoredomains.club',
+    'http://oldmilky.nomoredomains.club',
     'http://62.84.115.155',
     'http://localhost:3000',
   ],
   credentials: true,
 };
 
-// middlewares
 app.use(express.json());
 app.use(helmet());
 app.use(cookieParser());
@@ -48,8 +47,6 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-
-// done
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -69,17 +66,13 @@ app.post('/signup', celebrate({
 
 app.use(auth);
 
-// sync
 app.use('/', userRouter);
 app.use('/', cardsRouter);
-// запрос по несуществующему руту
 app.use('*', () => { throw new NotFoundError('Запрашиваемый ресурс не найден.'); });
 
-// логгер ошибок перед централизованным обработчиком
 app.use(errorLogger);
 
 app.use(errors());
-// централизованная обработка ошибок приложения
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({
