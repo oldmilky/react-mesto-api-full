@@ -3,4 +3,4 @@
   
 Домен: http://oldmilky.nomoredomains.club/signin
 Поддомен бека: http://backend.oldmilky.nomoredomains.club/signin
-Публичный IP: 62.84.115.155
+Публичный IP: 178.154.229.194
