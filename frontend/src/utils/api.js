@@ -98,7 +98,7 @@ class Api {
 }
 
 const api = new Api({
-    adress: 'http://backend.oldmilky.nomoredomains.club',
+    adress: 'https://backend.oldmilky.nomoredomains.club',
     headers: {
         'Content-Type': 'application/json'
     }

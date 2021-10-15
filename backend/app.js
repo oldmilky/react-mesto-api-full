@@ -30,8 +30,10 @@ const corsOptions = {
   origin: [
     'https://oldmilky.nomoredomains.club',
     'http://oldmilky.nomoredomains.club',
-    'http://62.84.115.155',
+    'http://178.154.229.194',
+    'https://178.154.229.194',
     'http://localhost:3000',
+    'https://localhost:3000'
   ],
   credentials: true,
 };
