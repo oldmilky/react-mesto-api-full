@@ -31,9 +31,7 @@ const corsOptions = {
     'https://oldmilky.nomoredomains.club',
     'http://oldmilky.nomoredomains.club',
     'http://178.154.229.194',
-    'https://178.154.229.194',
     'http://localhost:3000',
-    'https://localhost:3000'
   ],
   credentials: true,
 };
